@@ -3,7 +3,7 @@
 if(!file_exists(dirname(__FILE__).'/config.php')){
     copy(dirname(__FILE__).'/mtt/config.blank.php', dirname(__FILE__).'/config.php');
 }
-
+require_once 'config.php';
 require_once 'mtt/classes/Mtt.php';
 $mtt = new Mtt();
 
@@ -40,22 +40,24 @@ if($templateFiles && is_array($templateFiles)){
                 <abbr title="Mail Template Tester">MTT</abbr> <span>v1.0</span>
             </div>
 
-            <div class="settings uk-flex">
-                <div class="settings__item uk-margin-small-right">
-                    <select id="fileselect" class="uk-select">
-                        <?php if($templateFiles):?>
-                            <?php foreach ($templateFiles as $file):?>
-                            <option value="<?=$file?>"><?=$file?></option>
-                            <?php endforeach;?>
-                        <?php else:?>
-                        <option value="">no files found</option>
-                        <?php endif;?>
-                    </select>
-                </div>
-                <div class="settings__item uk-flex">
-                    <input class="uk-input" type="text" placeholder="E-Mail-Adresse">
-                    <button class="uk-button uk-button-primary">Send</button>
-                </div>
+            <div class="settings">
+                <form id="settingsform" action="" class="uk-flex uk-flex-middle">
+                    <div class="settings__item uk-margin-small-right">
+                        <select id="fileselect" class="uk-select">
+                            <?php if($templateFiles):?>
+                                <?php foreach ($templateFiles as $file):?>
+                                    <option value="<?=$file?>"><?=$file?></option>
+                                <?php endforeach;?>
+                            <?php else:?>
+                                <option value="">no files found</option>
+                            <?php endif;?>
+                        </select>
+                    </div>
+                    <div class="settings__item uk-flex">
+                        <input class="uk-input" type="text" value="<?=DEFAULT_MAIL_RECEIVER?>" placeholder="E-Mail-Adresse">
+                        <button class="uk-button uk-button-primary" type="submit">Send</button>
+                    </div>
+                </form>
             </div>
 
             <div class="pollandstatus uk-flex uk-flex-middle">

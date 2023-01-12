@@ -1,7 +1,8 @@
 
 frame = $('#preview');
 lastmodifiedtimefield = $('#lastmodifiedtime');
-endpoint = 'mtt/api/endpoints/checkchanges.php';
+endpointCheckChanges = 'mtt/api/endpoints/checkchanges.php';
+endpointSendMail = 'mtt/api/endpoints/sendmail.php';
 templatesDir = 'templates/'
 pollintervall = $("#intervalselect option:selected").val();
 
@@ -17,6 +18,7 @@ $(document).ready(function(){
     checkForChanges();
     pollForChanges();
     watchIntervalSelect();
+    watchMailSend();
 
 });
 
@@ -46,7 +48,7 @@ function watchIntervalSelect(){
     // event listener onchange
     $('#intervalselect').change(function(){
         pollintervall = this.value;
-        console.log('Polling intervall changed to ' + this.value/1000+" seconds");
+        console.info('Polling intervall changed to ' + this.value/1000+" seconds");
     });
 }
 
@@ -67,16 +69,16 @@ function checkForChanges(){
         return;
     }
 
-    $.post( endpoint, { filename: filename, lastmodified_time: lastmodified_time }, function( data ) {
+    $.post( endpointCheckChanges, { filename: filename, lastmodified_time: lastmodified_time }, function(data ) {
         let modified_time = data.modified_time;
         let modified = data.modified;
         if(modified){
             lastmodifiedtimefield.val(modified_time);
             updatePreview(filename + "?t="+ getTimestampInSeconds ());
-            //console.info(filename + ": Changes detected");
+            console.info(filename + ": Changes detected");
             setSuccessStatus(true);
         }
-        console.info(filename + ": NO changes detected");
+        //console.info(filename + ": NO changes detected");
     }).done(function() {
         setSuccessStatus(true);
     }).fail(function() {
@@ -102,4 +104,25 @@ function setSuccessStatus(state = false){
         return;
     }
     stateindicator.removeClass('success');
+}
+
+
+function watchMailSend(){
+    let form = $('#settingsform');
+    form.submit(function(e) {
+        e.preventDefault();
+        let filename = $("#fileselect option:selected").val();
+        $.post( endpointSendMail, { filename: filename }, function(data ) {
+            let status = data.status;
+            let error = data.error;
+            if(status){
+                UIkit.notification("<strong>Test mail sent</strong>", {status: 'success', pos: 'top-right'});
+            } else{
+                UIkit.notification("<strong>Test mail NOT sent</strong><br>" + error, {status: 'danger', pos: 'top-right'});
+            }
+
+        }).fail(function() {
+            UIkit.notification("Endpoint not reached", {status: 'danger', pos: 'top-right'});
+        });;
+    });
 }
