@@ -2,10 +2,15 @@
 require_once 'mtt/classes/Mtt.php';
 $mtt = new Mtt();
 
-$templateFiles = $mtt->getTemplateFiles();
+
 $intialTeamplateUrl = "mtt/default.html";
+$intialModifiedTime = 0;
+
+// getting template files in folder and data for first iframe url
+$templateFiles = $mtt->getTemplateFiles();
 if($templateFiles && is_array($templateFiles)){
     $intialTeamplateUrl = "templates/".$templateFiles[0];
+    $intialModifiedTime = $mtt->getModifiedTime($templateFiles[0]);
 }
 
 ?>
@@ -56,6 +61,9 @@ if($templateFiles && is_array($templateFiles)){
 
 
     </header>
+
+    <?php /* hidden fields holds last modiefied timestamp and is updated via JS*/ ?>
+    <input id="lastmodifiedtime" type="hidden" value="<?=$intialModifiedTime?>" />
 
     <main class="uk-padding">
         <div class="frameoptions uk-padding-small uk-text-center">

@@ -1,7 +1,9 @@
 
 frame = $('#preview');
-endpointsBase = 'mtt/api/endpoints/';
+lastmodifiedtimefield = $('#lastmodifiedtime');
+endpoint = 'mtt/api/endpoints/checkchanges.php';
 templatesDir = 'templates/'
+pollintervall = 5000;
 
 // observe iframe resize
 let resizeObserver = new ResizeObserver(() => {
@@ -15,6 +17,8 @@ resizeObserver.observe(frame[0]);
 $(document).ready(function(){
     updateFrameSize();
     watchFileSelect();
+    checkForChanges();
+    pollForChanges();
 
 });
 
@@ -46,4 +50,35 @@ function updatePreview(filename){
 }
 
 
+function checkForChanges(){
+    let lastmodified_time = lastmodifiedtimefield.val();
+    let filename = $("#fileselect option:selected").val();
+
+    // if no template loaded (showing default page only)
+    // we do nothing.
+    if(lastmodified_time == 0){
+        return;
+    }
+
+    $.post( endpoint, { filename: filename, lastmodified_time: lastmodified_time }, function( data ) {
+        let modified_time = data.modified_time;
+        let modified = data.modified;
+        if(modified){
+            lastmodifiedtimefield.val(modified_time);
+            updatePreview(filename + "?t="+ getTimestampInSeconds ());
+            console.log(filename + ": Changes detected");
+        }
+        console.log(filename + ": NO changes detected");
+    });
+}
+
+function pollForChanges(){
+    checkForChanges();
+    setTimeout(pollForChanges, pollintervall);
+}
+
+
+function getTimestampInSeconds() {
+    return Math.floor(Date.now() / 1000)
+}
 

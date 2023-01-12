@@ -25,7 +25,7 @@ class Mtt{
         $filename = str_replace(array('..','/'),"",$filename);
         $filePath = $this->templatesPath.$filename;
         if(file_exists($filePath)){
-            $modified_time = filemtime($filePath);
+            $modified_time = $this->getModifiedTime($filename);
             $modified = false;
             if($lastmodified_time < $modified_time){
                 $modified = true;
@@ -35,6 +35,15 @@ class Mtt{
                 'modified_time' => $modified_time,
                 'modified' => $modified
             );
+        };
+        return false;
+    }
+
+    public function getModifiedTime($filename){
+        $filename = str_replace(array('..','/'),"",$filename);
+        $filePath = $this->templatesPath.$filename;
+        if(file_exists($filePath)){
+            return filemtime($filePath);
         };
         return false;
     }
