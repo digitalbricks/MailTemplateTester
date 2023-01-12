@@ -55,8 +55,7 @@ if($templateFiles && is_array($templateFiles)){
 
             <div class="status uk-flex uk-flex-middle">
                 <span class="status__text">Status</span>
-                <span class="status__item status__item--success" title="not ready"></span>
-                <span class="status__item status__item--error active" title="ready"></span>
+                <span id="status" class="status__item" title="not ready"></span>
             </div>
 
 

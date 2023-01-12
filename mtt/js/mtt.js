@@ -51,6 +51,7 @@ function updatePreview(filename){
 
 
 function checkForChanges(){
+    setSuccessStatus(false);
     let lastmodified_time = lastmodifiedtimefield.val();
     let filename = $("#fileselect option:selected").val();
 
@@ -67,8 +68,14 @@ function checkForChanges(){
             lastmodifiedtimefield.val(modified_time);
             updatePreview(filename + "?t="+ getTimestampInSeconds ());
             console.log(filename + ": Changes detected");
+            setSuccessStatus(true);
         }
         console.log(filename + ": NO changes detected");
+    }).done(function() {
+        setSuccessStatus(true);
+    }).fail(function() {
+        console.log('An error occured during check for updates.')
+        setSuccessStatus(false);
     });
 }
 
@@ -82,3 +89,11 @@ function getTimestampInSeconds() {
     return Math.floor(Date.now() / 1000)
 }
 
+function setSuccessStatus(state = false){
+    let stateindicator = $('#status');
+    if(state){
+        stateindicator.addClass('success');
+        return;
+    }
+    stateindicator.removeClass('success');
+}
