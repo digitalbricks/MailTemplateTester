@@ -1,6 +1,7 @@
 
 frame = $('#preview');
-endpoints = 'mtt/api/endpoints/';
+endpointsBase = 'mtt/api/endpoints/';
+templatesDir = 'templates/'
 
 // observe iframe resize
 let resizeObserver = new ResizeObserver(() => {
@@ -13,7 +14,7 @@ resizeObserver.observe(frame[0]);
 
 $(document).ready(function(){
     updateFrameSize();
-    updateFileSelect();
+    watchFileSelect();
 
 });
 
@@ -25,28 +26,24 @@ function updateFrameSize(){
     sizedisplay.text(str);
 }
 
-function updateFileSelect(){
-    let field = $('#fileselect');
+function watchFileSelect(){
+    // initial
+    let initialFile = $("#fileselect option:selected").val();
+    if(initialFile !=""){
+        updatePreview(initialFile);
+    }
 
-    $.getJSON( endpoints + "getfiles.php", function( data ) {
-        var items = [];
-        $.each( data, function( key, val ) {
-            items.push( "<option value='" + val + "'>" + val + "</option>" );
-        });
-        if(data.length != 0){
-            field.html(items.join( "" ))
-        } else {
-            UIkit.notification(
-                'No .html files found in templates folder.',
-                {
-                    pos: 'top-right',
-                    status: 'danger',
-                    timeout: '10000'
-
-                }
-            );
-        }
-
+    // event listener onchange
+    $('#fileselect').change(function(){
+        let newFile = this.value;
+        updatePreview(newFile);
     });
 }
+
+
+function updatePreview(filename){
+    frame.attr('src', templatesDir + filename);
+}
+
+
 

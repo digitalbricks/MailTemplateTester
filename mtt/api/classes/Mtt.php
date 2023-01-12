@@ -6,7 +6,7 @@ class Mtt{
 
     public function __construct()
     {
-        $currenPath =  getcwd();
+        $currenPath =  dirname(__FILE__);
         $this->basePath = $currenPath.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR;
         $this->templatesPath = $this->basePath."templates/";
     }

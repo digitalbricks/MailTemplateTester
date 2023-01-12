@@ -1,3 +1,14 @@
+<?php
+require_once 'mtt/api/classes/Mtt.php';
+$mtt = new Mtt();
+
+$templateFiles = $mtt->getTemplateFiles();
+$intialTeamplateUrl = "mtt/default.html";
+if($templateFiles && is_array($templateFiles)){
+    $intialTeamplateUrl = "templates/".$templateFiles[0];
+}
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,7 +33,13 @@
             <div class="settings uk-flex">
                 <div class="settings__item uk-margin-small-right">
                     <select id="fileselect" class="uk-select">
-                        <option value="-">no files found</option>
+                        <?php if($templateFiles):?>
+                            <?php foreach ($templateFiles as $file):?>
+                            <option value="<?=$file?>"><?=$file?></option>
+                            <?php endforeach;?>
+                        <?php else:?>
+                        <option value="">no files found</option>
+                        <?php endif;?>
                     </select>
                 </div>
                 <div class="settings__item uk-flex">
@@ -47,7 +64,7 @@
 
         <div class="uk-flex uk-flex-center">
             <div class="frameholder">
-                <iframe id="preview" src="https://wikipedia.org/"></iframe>
+                <iframe id="preview" src="<?=$intialTeamplateUrl?>"></iframe>
             </div>
         </div>
 
