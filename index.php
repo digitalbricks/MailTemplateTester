@@ -1,4 +1,9 @@
 <?php
+// copy config template to new config.php if not already exsits
+if(!file_exists(dirname(__FILE__).'/config.php')){
+    copy(dirname(__FILE__).'/mtt/config.blank.php', dirname(__FILE__).'/config.php');
+}
+
 require_once 'mtt/classes/Mtt.php';
 $mtt = new Mtt();
 

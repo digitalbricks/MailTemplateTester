@@ -13,3 +13,13 @@ define('SMTP_USERNAME', 'user@example.com');
 define('SMTP_PASSWORD', 'secret');
 define('SMTP_TLS', false);
 define('SMTP_PORL', 465);
+
+
+
+
+
+/*
+ * NOTE: The config.php is copied from mtt/config.blank.php
+ * on the first run of index.php (if not already exists).
+ * So make sure available settings are in sync on both files.
+ * */
