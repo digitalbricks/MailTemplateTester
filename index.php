@@ -1,5 +1,5 @@
 <?php
-require_once 'mtt/api/classes/Mtt.php';
+require_once 'mtt/classes/Mtt.php';
 $mtt = new Mtt();
 
 $templateFiles = $mtt->getTemplateFiles();
