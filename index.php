@@ -40,13 +40,17 @@
 
     </header>
 
-    <main class="uk-padding uk-flex uk-flex-center">
-        <div class="frameoptions uk-padding-small">
-            <div id="framesize"></div>
+    <main class="uk-padding">
+        <div class="frameoptions uk-padding-small uk-text-center">
+            <div id="framesize"><!-- updated via JS --></div>
         </div>
-        <div class="frameholder">
-            <iframe id="preview" src="https://wikipedia.org/"></iframe>
+
+        <div class="uk-flex uk-flex-center">
+            <div class="frameholder">
+                <iframe id="preview" src="https://wikipedia.org/"></iframe>
+            </div>
         </div>
+
     </main>
 
 
