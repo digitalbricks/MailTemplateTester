@@ -19,8 +19,12 @@
 .status__item.success{
     background-color: #32d296;
 }
-.status__text{
+.status__text,
+.pollsetting__text{
     padding-right: 0.5rem;
+}
+.status__text{
+    padding-left: 1rem;
 }
 
 .frameholder{

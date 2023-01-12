@@ -53,10 +53,22 @@ if($templateFiles && is_array($templateFiles)){
                 </div>
             </div>
 
-            <div class="status uk-flex uk-flex-middle">
-                <span class="status__text">Status</span>
-                <span id="status" class="status__item" title="not ready"></span>
+            <div class="pollandstatus uk-flex uk-flex-middle">
+                <div class="pollsetting uk-flex uk-flex-middle">
+                    <span class="pollsetting__text">Interval</span>
+                    <select id="intervalselect" class="uk-select">
+                        <option value="2000">2s</option>
+                        <option value="5000" selected>5s</option>
+                        <option value="10000">10s</option>
+                        <option value="20000">20s</option>
+                    </select>
+                </div>
+                <div class="status uk-flex uk-flex-middle">
+                    <span class="status__text">Status</span>
+                    <span id="status" class="status__item" title="not ready"></span>
+                </div>
             </div>
+
 
 
     </header>

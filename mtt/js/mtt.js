@@ -3,7 +3,7 @@ frame = $('#preview');
 lastmodifiedtimefield = $('#lastmodifiedtime');
 endpoint = 'mtt/api/endpoints/checkchanges.php';
 templatesDir = 'templates/'
-pollintervall = 5000;
+pollintervall = $("#intervalselect option:selected").val();
 
 // observe iframe resize
 let resizeObserver = new ResizeObserver(() => {
@@ -11,14 +11,12 @@ let resizeObserver = new ResizeObserver(() => {
 });
 resizeObserver.observe(frame[0]);
 
-
-
-
 $(document).ready(function(){
     updateFrameSize();
     watchFileSelect();
     checkForChanges();
     pollForChanges();
+    watchIntervalSelect();
 
 });
 
@@ -41,6 +39,14 @@ function watchFileSelect(){
     $('#fileselect').change(function(){
         let newFile = this.value;
         updatePreview(newFile);
+    });
+}
+
+function watchIntervalSelect(){
+    // event listener onchange
+    $('#intervalselect').change(function(){
+        pollintervall = this.value;
+        console.log('Polling intervall changed to ' + this.value/1000+" seconds");
     });
 }
 
@@ -67,21 +73,21 @@ function checkForChanges(){
         if(modified){
             lastmodifiedtimefield.val(modified_time);
             updatePreview(filename + "?t="+ getTimestampInSeconds ());
-            console.log(filename + ": Changes detected");
+            //console.info(filename + ": Changes detected");
             setSuccessStatus(true);
         }
-        console.log(filename + ": NO changes detected");
+        console.info(filename + ": NO changes detected");
     }).done(function() {
         setSuccessStatus(true);
     }).fail(function() {
-        console.log('An error occured during check for updates.')
+        console.warn('An error occured during check for updates.')
         setSuccessStatus(false);
     });
 }
 
 function pollForChanges(){
     checkForChanges();
-    setTimeout(pollForChanges, pollintervall);
+    window.Timer = setTimeout(pollForChanges, pollintervall);
 }
 
 
