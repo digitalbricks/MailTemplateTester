@@ -49,3 +49,9 @@
     border:0;
     background-color: #fff;
 }
+.newinstallwarnning{
+    padding: 1rem;
+    background-color: #f00;
+    color: #fff;
+    text-align: center;
+}

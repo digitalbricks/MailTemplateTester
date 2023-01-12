@@ -1,7 +1,9 @@
 <?php
 // copy config template to new config.php if not already exsits
+$newInstall = false;
 if(!file_exists(dirname(__FILE__).'/config.php')){
     copy(dirname(__FILE__).'/mtt/config.blank.php', dirname(__FILE__).'/config.php');
+    $newInstall = true;
 }
 require_once 'config.php';
 require_once 'mtt/classes/Mtt.php';
@@ -76,9 +78,15 @@ if($templateFiles && is_array($templateFiles)){
                 </div>
             </div>
 
-
-
     </header>
+
+    <?php if($newInstall): ?>
+    <div class="newinstallwarnning">
+        This seems to be the first time you are running MailTemplateTester. Before you start,
+        please check and adapt the settings in the just created <strong>config.php</strong>.
+        Having done this, just refresh this page and enjoy.
+    </div>
+    <?php endif;?>
 
     <?php /* hidden fields holds last modiefied timestamp and is updated via JS*/ ?>
     <input id="lastmodifiedtime" type="hidden" value="<?=$intialModifiedTime?>" />

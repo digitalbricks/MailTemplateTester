@@ -1,5 +1,4 @@
 .idea/
 templates/
 config.php
-
-config.php
+.DS_Store
