@@ -13,9 +13,8 @@ if(array_key_exists('filename', $_POST) && array_key_exists('lastmodified_time',
     $lastmodified_time = $_GET['lastmodified_time'];
     $validRequest = true;
 }
+if(!$validRequest){die();}
 
-if($validRequest){
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($mtt->checkFileChanges($filename, $lastmodified_time));
-}
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($mtt->checkFileChanges($filename, $lastmodified_time));
 

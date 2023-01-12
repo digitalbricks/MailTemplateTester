@@ -48,4 +48,13 @@ class Mtt{
         return false;
     }
 
+    public function getHtml($filename){
+        $filename = str_replace(array('..','/'),"",$filename);
+        $filePath = $this->templatesPath.$filename;
+        if(file_exists($filePath)){
+            return file_get_contents($filePath);
+        };
+        return false;
+    }
+
 }

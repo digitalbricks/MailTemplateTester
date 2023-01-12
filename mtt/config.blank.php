@@ -12,7 +12,7 @@ define('SMTP_AUTH', true);
 define('SMTP_USERNAME', 'user@example.com');
 define('SMTP_PASSWORD', 'secret');
 define('SMTP_TLS', false);
-define('SMTP_PORL', 465);
+define('SMTP_PORT', 465);
 
 
 
