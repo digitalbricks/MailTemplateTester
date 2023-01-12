@@ -2,6 +2,8 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+$subject = 'MailTemplateTester Testmail ('.date("Y-m-d / H:i:s").')';
+
 $validRequest = false;
 if(array_key_exists('filename', $_POST)){
     $filename = $_POST['filename'];
@@ -28,8 +30,6 @@ if(!$html){
     ));
     die();
 }
-
-$subject = 'MailTemplateTester Testmail ('.date("Y-m-d / H:i:s").')';
 
 // check if html contains html some html specific elements
 $extendHtml = $html;
