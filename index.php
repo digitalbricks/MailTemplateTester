@@ -21,8 +21,8 @@
 
             <div class="settings uk-flex">
                 <div class="settings__item uk-margin-small-right">
-                    <select class="uk-select">
-                        <option>filename.html</option>
+                    <select id="fileselect" class="uk-select">
+                        <option value="-">no files found</option>
                     </select>
                 </div>
                 <div class="settings__item uk-flex">
