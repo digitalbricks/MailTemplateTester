@@ -82,7 +82,7 @@ if(MAIL_METHOD == 'smtp'){
         $mail->setFrom(DEFAULT_MAIL_RECEIVER, 'MTT');
         $mail->addAddress(DEFAULT_MAIL_RECEIVER);
         $mail->Subject = $subject;
-        $mail->Body = $mail; // not $extendHtml, PHPMailer wants just the body!
+        $mail->Body = $html; // not $extendHtml, PHPMailer wants just the body!
         $mail->send();
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode(array(
