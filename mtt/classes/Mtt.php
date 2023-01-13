@@ -57,4 +57,20 @@ class Mtt{
         return false;
     }
 
+    function sendJsonResponse(
+        bool $success = true,
+        string $errormessage = "",
+        bool $dieAfter = true
+    ){
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(array(
+            'status' => $success,
+            'error' => $errormessage
+        ));
+        if($dieAfter){
+            die();
+        }
+
+    }
+
 }

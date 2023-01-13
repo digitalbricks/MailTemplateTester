@@ -18,32 +18,32 @@ if(array_key_exists('filename', $_POST) && array_key_exists('email', $_POST)){
 // cancel request if no 'filename' and 'email' given
 if(!$validRequest){die();}
 
-// sanitize & validate given email address
-$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(array(
-        'status' => false,
-        'error' => 'e-mail address seems invalid'
-    ));
-    die();
-}
-
-
 
 require_once '../../classes/Mtt.php';
 require_once '../../../config.php';
 $mtt = new Mtt();
 
 
+// sanitize & validate given email address
+$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $mtt->sendJsonResponse(
+        $success = false,
+        $errormessage = 'e-mail address seems invalid'
+    );
+}
+
+
+
+
+
+
 $html = $mtt->getHtml($filename);
 if(!$html){
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(array(
-        'status' => false,
-        'error' => 'File '.$filename.' not found'
-    ));
-    die();
+    $mtt->sendJsonResponse(
+        $success = false,
+        $errormessage = 'File '.$filename.' not found'
+    );
 }
 
 // check if html contains html some html specific elements
@@ -68,11 +68,9 @@ if(MAIL_METHOD == 'php'){
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $message = $extendHtml;
     if(mail($to, $subject, $message, $headers)){
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(array(
-            'status' => true,
-            'error' => ''
-        ));
+        $mtt->sendJsonResponse(
+            $success = true
+        );
     };
     die();
 }
@@ -99,17 +97,14 @@ if(MAIL_METHOD == 'smtp'){
         $mail->Subject = $subject;
         $mail->Body = $html; // not $extendHtml, PHPMailer wants just the body!
         $mail->send();
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(array(
-            'status' => true,
-            'error' => ''
-        ));
+        $mtt->sendJsonResponse(
+            $success = true
+        );
     } catch (Exception $e) {
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(array(
-            'status' => true,
-            'error' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"
-        ));
+        $mtt->sendJsonResponse(
+            $success = true,
+            $errormessage = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"
+        );
     }
 
 }
