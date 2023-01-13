@@ -56,7 +56,7 @@ if($templateFiles && is_array($templateFiles)){
                         </select>
                     </div>
                     <div class="settings__item uk-flex">
-                        <input class="uk-input" type="text" value="<?=DEFAULT_MAIL_RECEIVER?>" placeholder="E-Mail-Adresse">
+                        <input id="receiver" class="uk-input" type="text" value="<?=DEFAULT_MAIL_RECEIVER?>" placeholder="E-Mail-Adresse">
                         <button class="uk-button uk-button-primary" type="submit">Send</button>
                     </div>
                 </form>

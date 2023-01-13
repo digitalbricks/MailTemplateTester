@@ -5,14 +5,29 @@ use PHPMailer\PHPMailer\Exception;
 $subject = 'MailTemplateTester Testmail ('.date("Y-m-d / H:i:s").')';
 
 $validRequest = false;
-if(array_key_exists('filename', $_POST)){
+if(array_key_exists('filename', $_POST) && array_key_exists('email', $_POST)){
     $filename = $_POST['filename'];
+    $email = $_POST['email'];
     $validRequest = true;
-} elseif(array_key_exists('filename', $_GET)){
+} elseif(array_key_exists('filename', $_GET) && array_key_exists('email', $_GET)){
     $filename = $_GET['filename'];
+    $email = $_GET['email'];
     $validRequest = true;
 }
+
+// cancel request if no 'filename' and 'email' given
 if(!$validRequest){die();}
+
+// sanitize & validate given email address
+$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(array(
+        'status' => false,
+        'error' => 'e-mail address seems invalid'
+    ));
+    die();
+}
 
 
 
@@ -46,9 +61,9 @@ if(!str_contains($html,'<body') && !str_contains($html,'<html')){
 
 // Mailing method PHP
 if(MAIL_METHOD == 'php'){
-    $to = DEFAULT_MAIL_RECEIVER;
-    $headers  = "From: " . DEFAULT_MAIL_RECEIVER . "\r\n";
-    $headers .= "Reply-To: " . DEFAULT_MAIL_RECEIVER . "\r\n";
+    $to = $email;
+    $headers  = "From: " . $email . "\r\n";
+    $headers .= "Reply-To: " . $email . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $message = $extendHtml;
@@ -79,8 +94,8 @@ if(MAIL_METHOD == 'smtp'){
         if(SMTP_TLS){
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         }
-        $mail->setFrom(DEFAULT_MAIL_RECEIVER, 'MTT');
-        $mail->addAddress(DEFAULT_MAIL_RECEIVER);
+        $mail->setFrom($email, 'MTT');
+        $mail->addAddress($email);
         $mail->Subject = $subject;
         $mail->Body = $html; // not $extendHtml, PHPMailer wants just the body!
         $mail->send();

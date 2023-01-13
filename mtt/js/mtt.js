@@ -112,7 +112,8 @@ function watchMailSend(){
     form.submit(function(e) {
         e.preventDefault();
         let filename = $("#fileselect option:selected").val();
-        $.post( endpointSendMail, { filename: filename }, function(data ) {
+        let email = $("#receiver").val();
+        $.post( endpointSendMail, { filename: filename, email: email }, function(data ) {
             let status = data.status;
             let error = data.error;
             if(status){
