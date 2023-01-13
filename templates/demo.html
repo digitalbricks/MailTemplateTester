@@ -1,0 +1,40 @@
+<!--
+DEMO FILE
+This file is just for demoing the function of MailTemplateTester
+and is neither perfect nor optimized for small screens and a number
+of mail clients (e.g. Outlook doesn't support CSS flex at the moment).
+So don't consider this demo as template you can rely on.
+-->
+
+<style>
+    .demo{
+        font-family: Helvetica, Arial, sans-serif;
+        display: flex;
+        align-items: center;
+    }
+    .demo__image img {
+        border-radius: 1rem;
+    }
+    .demo__text{
+        font-size: 0.9rem;
+        padding-left: 1em;
+        line-height: 1.3;
+        color: #999;
+    }
+    .demo__text a{
+        text-decoration: none;
+        color: #32d296;
+    }
+</style>
+<div class="demo">
+    <div class="demo__image">
+        <img src="https://picsum.photos/100/100" alt="Could be a logo">
+    </div>
+    <div class="demo__text">
+        <strong>The Acme Demo Company1</strong><br>
+        Demostreet 17a | Democity<br>
+        Germany<br>
+        <a href="mailto:mail@example.com">mail@example.com</a><br>
+        <a href="https://mail@example.com">example.com</a>
+    </div>
+</div>

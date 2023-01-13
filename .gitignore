@@ -1,5 +1,7 @@
 .idea/
-templates/
-
 config.php
 .DS_Store
+
+# don't track template files but keep demo file
+templates/*
+!templates/demo.html
