@@ -22,9 +22,8 @@ class Mtt{
     }
 
     public function checkFileChanges(string $filename, int $lastmodified_time){
-        $filename = str_replace(array('..','/'),"",$filename);
-        $filePath = $this->templatesPath.$filename;
-        if(file_exists($filePath)){
+        $filePath = $this->getFilePath($filename);
+        if($filePath){
             $modified_time = $this->getModifiedTime($filename);
             $modified = false;
             if($lastmodified_time < $modified_time){
@@ -40,18 +39,16 @@ class Mtt{
     }
 
     public function getModifiedTime($filename){
-        $filename = str_replace(array('..','/'),"",$filename);
-        $filePath = $this->templatesPath.$filename;
-        if(file_exists($filePath)){
+        $filePath = $this->getFilePath($filename);
+        if($filePath){
             return filemtime($filePath);
         };
         return false;
     }
 
     public function getHtml($filename){
-        $filename = str_replace(array('..','/'),"",$filename);
-        $filePath = $this->templatesPath.$filename;
-        if(file_exists($filePath)){
+        $filePath = $this->getFilePath($filename);
+        if($filePath){
             return file_get_contents($filePath);
         };
         return false;
@@ -70,7 +67,14 @@ class Mtt{
         if($dieAfter){
             die();
         }
-
     }
 
+    public function getFilePath ($filename){
+        $filename = basename($filename);
+        $filePath = $this->templatesPath.$filename;
+        if(file_exists($filePath)){
+            return $filePath;
+        };
+        return false;
+    }
 }

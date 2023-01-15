@@ -5,3 +5,4 @@ config.php
 # don't track template files but keep demo file
 templates/*
 !templates/demo.html
+/classtest.php
