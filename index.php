@@ -36,7 +36,7 @@ if($templateFiles && is_array($templateFiles)){
 </head>
 <body>
 
-    <header class="uk-background-muted uk-padding-small uk-flex uk-flex-between uk-flex-middle">
+    <header class="uk-background-muted uk-padding-small uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
 
             <div class="apptitle">
                 <abbr title="Mail Template Tester">MTT</abbr> <span>v1.0</span>
@@ -57,7 +57,7 @@ if($templateFiles && is_array($templateFiles)){
                     </div>
                     <div class="settings__item uk-flex">
                         <input id="receiver" class="uk-input" type="text" value="<?=DEFAULT_MAIL_RECEIVER?>" placeholder="E-Mail-Adresse">
-                        <button class="uk-button uk-button-primary" type="submit">Send</button>
+                        <button id="sendbutton" class="uk-button uk-button-primary" type="submit">Send</button>
                     </div>
                 </form>
             </div>
