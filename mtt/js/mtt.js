@@ -82,7 +82,7 @@ function checkForChanges(){
     }).done(function() {
         setSuccessStatus(true);
     }).fail(function() {
-        console.warn('An error occured during check for updates.')
+        console.error('MTT: An error occured during check for updates.');
         setSuccessStatus(false);
     });
 }
@@ -101,9 +101,11 @@ function setSuccessStatus(state = false){
     let stateindicator = $('#status');
     if(state){
         stateindicator.addClass('success');
+        stateindicator.prop('title', 'watching for changes');
         return;
     }
     stateindicator.removeClass('success');
+    stateindicator.prop('title', 'not ready');
 }
 
 
@@ -117,13 +119,20 @@ function watchMailSend(){
             let status = data.status;
             let error = data.error;
             if(status){
-                UIkit.notification("<strong>Test mail sent</strong>", {status: 'success', pos: 'top-right'});
+                notify("<span uk-icon=\"mail\"></span> Test mail sent");
             } else{
-                UIkit.notification("<strong>Test mail NOT sent</strong><br>" + error, {status: 'danger', pos: 'top-right'});
+                notify("Test mail NOT sent", "", "danger");
             }
-
         }).fail(function() {
-            UIkit.notification("Endpoint not reached", {status: 'danger', pos: 'top-right'});
-        });;
+            notify("Endpoint not reached", "", "danger");
+        });
     });
+}
+
+
+function notify(message, additional="", status = "success"){
+    if(additional && additional !=""){
+        additional = "<br>" + additional;
+    }
+    UIkit.notification("<strong>" + message + "</strong>" + additional, {status: status, pos: 'top-right'});
 }

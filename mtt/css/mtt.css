@@ -1,3 +1,7 @@
+:root{
+    --color-error: #f0506e;
+    --color-success: #32d296;
+}
 .apptitle{
     font-weight: bold;
 }
@@ -14,10 +18,10 @@
     height: 1rem;
     overflow: hidden;
     border-radius: 50%;
-    background-color: #f0506e;
+    background-color: var(--color-error);
 }
 .status__item.success{
-    background-color: #32d296;
+    background-color: var(--color-success);
 }
 .status__text,
 .pollsetting__text{
@@ -25,6 +29,17 @@
 }
 .status__text{
     padding-left: 1rem;
+}
+.uk-notification-message{
+    box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.3);
+}
+.uk-notification-message-danger{
+    background-color: var(--color-error);
+    color: #fff;
+}
+.uk-notification-message-success{
+    background-color: var(--color-success);
+    color: #fff;
 }
 
 .frameholder{
