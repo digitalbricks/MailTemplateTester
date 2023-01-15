@@ -121,7 +121,7 @@ function watchMailSend(){
             if(status){
                 notify("<span uk-icon=\"mail\"></span> Test mail sent");
             } else{
-                notify("Test mail NOT sent", "", "danger");
+                notify("Test mail NOT sent", error, "danger");
             }
         }).fail(function() {
             notify("Endpoint not reached", "", "danger");

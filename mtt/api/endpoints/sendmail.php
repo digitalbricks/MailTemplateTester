@@ -92,7 +92,7 @@ if(MAIL_METHOD == 'smtp'){
         if(SMTP_TLS){
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         }
-        $mail->setFrom($email, 'MTT');
+        $mail->setFrom(SMTP_FROM, 'MTT');
         $mail->addAddress($email);
         $mail->Subject = $subject;
         $mail->Body = $html; // not $extendHtml, PHPMailer wants just the body!
@@ -102,7 +102,7 @@ if(MAIL_METHOD == 'smtp'){
         );
     } catch (Exception $e) {
         $mtt->sendJsonResponse(
-            $success = true,
+            $success = false,
             $errormessage = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"
         );
     }

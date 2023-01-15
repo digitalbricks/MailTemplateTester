@@ -7,6 +7,7 @@ define('DEFAULT_MAIL_RECEIVER', 'info@example.com');
 define('MAIL_METHOD', 'php');
 
 // if using SMTP, define server settings
+define('SMTP_FROM', 'mail@example.com');
 define('SMTP_HOST', 'smtp.example.com');
 define('SMTP_AUTH', true);
 define('SMTP_USERNAME', 'user@example.com');
